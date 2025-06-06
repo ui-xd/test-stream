@@ -1,0 +1,22 @@
+{
+  "name": "docus-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "nestri.dev": "nuxi dev",
+    "build": "nuxi build --preset=cloudflare_pages",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nuxt-themes/docus": "latest",
+    "@nuxt/devtools": "^2.3.2",
+    "@nuxt/eslint-config": "^0.5.6",
+    "@nuxt/ui": "^2.19.2",
+    "@nuxtjs/plausible": "^1.0.2",
+    "@types/node": "^20.16.5",
+    "eslint": "^9.10.0",
+    "nuxt": "^3.16.1"
+  }
+}

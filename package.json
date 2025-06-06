@@ -1,0 +1,42 @@
+{
+  "name": "nestri",
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20240821.1",
+    "@pulumi/pulumi": "^3.134.0",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/aws-lambda": "8.10.147",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.2.4",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "sso": "aws sso login --sso-session=nestri --no-browser --use-device-code"
+  },
+  "overrides": {
+    "@openauthjs/openauth": "0.4.3",
+    "steam-session": "1.9.3"
+  },
+  "patchedDependencies": {
+    "@macaron-css/solid@1.5.3": "patches/@macaron-css%2Fsolid@1.5.3.patch",
+    "drizzle-orm@0.36.1": "patches/drizzle-orm@0.36.1.patch",
+    "steam-session@1.9.3": "patches/steam-session@1.9.3.patch"
+  },
+  "trustedDependencies": [
+    "core-js-pure",
+    "esbuild",
+    "protobufjs",
+    "workerd"
+  ],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "sst": "^3.11.21"
+  }
+}

@@ -1,0 +1,55 @@
+.blog h1 {
+  @apply text-4xl font-bricolage font-bold text-gray-800 dark:text-gray-200;
+}
+
+.blog h2 {
+  @apply text-3xl font-bricolage font-bold text-gray-800 dark:text-gray-200;
+}
+
+.blog h3 {
+  @apply text-2xl font-mona font-bold text-gray-800 dark:text-gray-200;
+}
+
+.blog img {
+  @apply w-full h-auto rounded-lg ring-2 ring-gray-300;
+}
+
+.blog * {
+  @apply text-base text-gray-600 dark:text-gray-400;
+}
+
+.blog strong {
+  @apply text-gray-700 dark:text-gray-300 font-mona font-semibold;
+}
+
+.blog ul {
+  @apply list-inside pl-4;
+}
+
+.blog ol {
+  @apply list-disc list-decimal list-inside;
+}
+
+.blog li {
+  @apply list-decimal list-inside pl-4;
+}
+
+.blog a {
+  @apply text-primary-500 underline underline-offset-2 cursor-pointer;
+}
+
+.blog code {
+  @apply bg-gray-700 p-1 rounded-sm;
+}
+
+.blog blockquote {
+  @apply bg-gray-800 p-2 rounded-md border-l-4 border-l-primary-500
+}
+
+#toc .active {
+  @apply text-gray-900 dark:text-gray-100 transition-all duration-200;
+}
+
+#toc .active svg {
+  @apply text-gray-900 dark:text-gray-100 block transition-all duration-200;
+}
