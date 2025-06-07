@@ -58,28 +58,16 @@ fn get_gpu_vendor(vendor_id: &str) -> GPUVendor {
 /// Retrieves a list of GPUs available on the system.
 /// # Returns
 /// * `Vec<GPUInfo>` - A vector containing information about each GPU.
-pub fn get_gpus() -> Vec<GPUInfo> {
-    let output = Command::new("lspci")
-        .args(["-mm", "-nn"])
-        .output()
-        .expect("Failed to execute lspci");
+// In packages/server/src/gpu.rs
 
-    str::from_utf8(&output.stdout)
-        .unwrap()
-        .lines()
-        .filter_map(|line| parse_pci_device(line))
-        .filter(|(class_id, _, _, _)| matches!(class_id.as_str(), "0300" | "0302" | "0380"))
-        .filter_map(|(_, vendor_id, device_name, pci_addr)| {
-            get_dri_device_path(&pci_addr)
-                .map(|(card, render)| (vendor_id, card, render, device_name))
-        })
-        .map(|(vid, card_path, render_path, device_name)| GPUInfo {
-            vendor: get_gpu_vendor(&vid),
-            card_path,
-            render_path,
-            device_name,
-        })
-        .collect()
+pub fn get_gpus() -> Vec<GPUInfo> {
+    // Bypassing lspci detection and hardcoding the NVIDIA A16 GPU.
+    vec![GPUInfo {
+        vendor: GPUVendor::NVIDIA,
+        card_path: "/dev/dri/card0".to_string(),
+        render_path: "/dev/dri/renderD128".to_string(),
+        device_name: "NVIDIA A16-4Q".to_string(),
+    }]
 }
 
 fn parse_pci_device(line: &str) -> Option<(String, String, String, String)> {
