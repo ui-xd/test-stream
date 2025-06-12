@@ -1,16 +1,15 @@
 import "zod-openapi/extend";
-import { cors } from "hono/cors";
+import { Hono } from "hono";
 import { GameApi } from "./game";
 import { SteamApi } from "./steam";
 import { auth } from "./utils/auth";
 import { FriendApi } from "./friend";
 import { logger } from "hono/logger";
-import { type Env, Hono } from "hono";
-import { Realtime } from "./realtime";
 import { AccountApi } from "./account";
 import { openAPISpecs } from "hono-openapi";
 import { patchLogger } from "../utils/patch-logger";
 import { HTTPException } from "hono/http-exception";
+import { handle, streamHandle } from "hono/aws-lambda";
 import { ErrorCodes, VisibleError } from "@nestri/core/error";
 
 patchLogger();
@@ -18,7 +17,6 @@ patchLogger();
 export const app = new Hono();
 app
     .use(logger())
-    .use(cors())
     .use(async (c, next) => {
         c.header("Cache-Control", "no-store");
         return next();
@@ -27,9 +25,8 @@ app
 
 const routes = app
     .get("/", (c) => c.text("Hello World!"))
-    .route("/games",GameApi.route)
+    .route("/games", GameApi.route)
     .route("/steam", SteamApi.route)
-    .route("/realtime", Realtime.route)
     .route("/friends", FriendApi.route)
     .route("/account", AccountApi.route)
     .onError((error, c) => {
@@ -94,13 +91,6 @@ app.get(
     }),
 );
 
-export default {
-    port: 3001,
-    idleTimeout: 255,
-    webSocketHandler: Realtime.webSocketHandler,
-    fetch: (req: Request,env: Env) =>
-        app.fetch(req, env, {
-            waitUntil: (fn) => fn,
-            passThroughOnException: () => { },
-        }),
-};
+export type Routes = typeof routes;
+
+export const handler = process.env.SST_LIVE ? handle(app) : streamHandle(app);

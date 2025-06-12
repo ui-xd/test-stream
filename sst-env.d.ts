@@ -7,13 +7,16 @@ import "sst"
 declare module "sst" {
   export interface Resource {
     "Api": {
-      "service": string
-      "type": "sst.aws.Service"
+      "type": "sst.aws.Router"
+      "url": string
+    }
+    "ApiFn": {
+      "name": string
+      "type": "sst.aws.Function"
       "url": string
     }
     "Auth": {
-      "service": string
-      "type": "sst.aws.Service"
+      "type": "sst.aws.Auth"
       "url": string
     }
     "Bus": {
@@ -101,6 +104,12 @@ declare module "sst" {
     "Storage": {
       "name": string
       "type": "sst.aws.Bucket"
+    }
+    "Urls": {
+      "api": string
+      "auth": string
+      "site": string
+      "type": "sst.sst.Linkable"
     }
     "VPC": {
       "bastion": string
